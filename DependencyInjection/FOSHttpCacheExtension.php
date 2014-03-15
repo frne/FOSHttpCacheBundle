@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * {@inheritdoc}
@@ -79,6 +80,10 @@ class FOSHttpCacheExtension extends Extension
             $loader->load('flash_message_listener.xml');
 
             $container->setParameter($this->getAlias().'.event_listener.flash_message.options', $config['flash_message_listener']);
+        }
+
+        if (version_compare(Kernel::VERSION, '2.4.0', '>=')) {
+            $loader->load('commands.xml');
         }
     }
 
